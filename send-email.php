@@ -1,6 +1,4 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
@@ -15,17 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = htmlspecialchars($_POST['phone']);
     $message = htmlspecialchars($_POST['message']);
 
-    $mail = new PHPMailer(true);
-
     try {
         //Server settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
-        $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['SMTP_EMAIL']; // Get email from .env file
-        $mail->Password = $_ENV['SMTP_PASSWORD']; // Get password from .env file
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail = new PHPMailer(true);
 
         //Recipients
         $mail->setFrom($_ENV['SMTP_EMAIL'], 'Website Contact');
