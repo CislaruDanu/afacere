@@ -14,10 +14,10 @@ window.onload = function () {
 
     // Collect form data
     const templateParams = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value, // Updated to match the form
-      message: document.getElementById("message").value,
+      name: document.getElementById("name")?.value || "Anonymous",
+      email: document.getElementById("email")?.value || "no-email@example.com",
+      phone: document.getElementById("phone")?.value || "N/A",
+      message: document.getElementById("message")?.value || "No message provided",
     };
 
     // Send email using EmailJS
@@ -31,6 +31,8 @@ window.onload = function () {
         function (error) {
           alert("Failed to send email. Check console for details.");
           console.error("FAILED...", error);
+          // Added detailed error logging
+          console.error("Error details:", error.response ? error.response.data : error);
         }
       );
   });
