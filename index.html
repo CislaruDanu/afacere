@@ -811,9 +811,36 @@
       © 2024 printIT. Toate drepturile rezervate. 🇷🇴 Made in Romania
      </div>
     </div>
-   </footer><!-- Sticky CTA (Mobile Only) -->
-   <div class="sticky-cta md:hidden"><a href="#contact-section" class="block w-full bg-[#FFE500] text-black font-bold text-center py-4 rounded-xl glow-yellow"> Solicită ofertă gratuită </a>
-   </div>
+   <footer>
+  <!-- Sticky CTA (Mobile Only) -->
+  <div id="stickyCTA" class="sticky-cta md:hidden fixed bottom-4 left-0 w-full px-4 transition-transform duration-300 transform translate-y-full">
+    <a href="#contact-section" class="block w-full bg-[#FFE500] text-black font-bold text-center py-4 rounded-xl glow-yellow">
+      Solicită ofertă gratuită
+    </a>
+  </div>
+</footer>
+
+<script>
+  let lastScroll = 0;
+  const cta = document.getElementById('stickyCTA');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      // Scroll down → arată butonul
+      cta.classList.remove('translate-y-full');
+      cta.classList.add('translate-y-0');
+    } else if (currentScroll < lastScroll) {
+      // Scroll up → ascunde butonul
+      cta.classList.remove('translate-y-0');
+      cta.classList.add('translate-y-full');
+    }
+
+    lastScroll = currentScroll;
+  });
+</script>
+
   </div>
   <script>
     // Default configuration
@@ -952,29 +979,3 @@
   </script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c99043732e4e4ab',t:'MTc3MDM2MzgwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-<script>
-  // Detect scroll direction & show/hide sticky CTA pe mobil
-  let lastScrollTop = 0;
-  const stickyCta = document.getElementById('sticky-cta');
-
-  if (stickyCta) {
-    window.addEventListener('scroll', function () {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-      // Ignoră scroll mic (evită flickering la scroll lent)
-      if (Math.abs(lastScrollTop - scrollTop) < 10) return;
-
-      if (scrollTop > lastScrollTop) {
-        // Scroll DOWN → ascunde butonul
-        stickyCta.classList.add('translate-y-full', 'opacity-0');
-        stickyCta.classList.remove('translate-y-0', 'opacity-100');
-      } else {
-        // Scroll UP → arată butonul
-        stickyCta.classList.remove('translate-y-full', 'opacity-0');
-        stickyCta.classList.add('translate-y-0', 'opacity-100');
-      }
-
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Pentru compatibilitate Safari/iOS
-    });
-  }
-</script>
