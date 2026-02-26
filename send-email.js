@@ -1,39 +1,36 @@
-// script.js
+// Initialize EmailJS
+emailjs.init("JnoJU8VlnhCR8fcld");
 
-// Initialize EmailJS with your Public Key
-(function () {
-  emailjs.init("JnoJU8VlnhCR8fcld"); // replace with your EmailJS public key
-})();
+// Wait for DOM to load completely
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("contact-form");
+  
+  if (form) {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
 
-// Attach event listener to the form
-window.onload = function () {
-  const form = document.querySelector("form");
+      const templateParams = {
+        name: document.getElementById("name")?.value || "Anonymous",
+        email: document.getElementById("email")?.value || "no-email@example.com",
+        phone: document.getElementById("phone")?.value || "N/A",
+        message: document.getElementById("message")?.value || "No message provided",
+      };
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // prevent page reload
-
-    // Collect form data
-    const templateParams = {
-      name: document.getElementById("name")?.value || "Anonymous",
-      email: document.getElementById("email")?.value || "no-email@example.com",
-      phone: document.getElementById("phone")?.value || "N/A",
-      message: document.getElementById("message")?.value || "No message provided",
-    };
-
-    // Send email using EmailJS
-    emailjs
-      .send("service_dxlai5b", "template_prfcszc", templateParams)
-      .then(
-        function (response) {
-          alert("Email sent successfully!");
-          console.log("SUCCESS!", response.status, response.text);
-        },
-        function (error) {
-          alert("Failed to send email. Check console for details.");
-          console.error("FAILED...", error);
-          // Added detailed error logging
-          console.error("Error details:", error.response ? error.response.data : error);
-        }
-      );
-  });
-};
+      emailjs.send("service_dxlai5b", "template_prfcszc", templateParams)
+        .then(
+          function(response) {
+            console.log("✅ Email trimis!", response);
+            // Hide form, show success
+            form.classList.add("hidden");
+            document.getElementById("success-message").classList.remove("hidden");
+          },
+          function(error) {
+            console.error("❌ Eroare:", error);
+            alert("Eroare la trimitere: " + (error.text || "Încearcă din nou"));
+          }
+        );
+    });
+  } else {
+    console.error("❌ Form not found! Check if id='contact-form' exists");
+  }
+});
